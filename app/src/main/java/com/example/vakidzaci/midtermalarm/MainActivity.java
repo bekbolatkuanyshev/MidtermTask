@@ -1,9 +1,12 @@
 package com.example.vakidzaci.midtermalarm;
 
+import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -27,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startTime();
             }
         });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -41,6 +44,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void startTime(){
+        Intent intent = new Intent(getBaseContext(),TimeActivity.class);
+        startActivityForResult(intent,1);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("mylogs","onActivityResult");
+        if (data == null) {Log.d("mylogs","NULL");return;}
+        if(requestCode == 1){
+            Log.d("mylogs","OK");
+            String time = data.getStringExtra("time");
+            String msg  = data.getStringExtra("msg");
+            this.data.add(new AlarmItem(time,msg,true));
+            myAdapter = new MyAdapter();
+            myAdapter.addContext(getBaseContext());
+            myAdapter.addItems(this.data);
+            recyclerView.setAdapter(myAdapter);
+        }
+    }
 
     public void init(){
 
