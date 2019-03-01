@@ -77,7 +77,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.TruckViewHolder>{
 
         @Override
         public void onClick(View v) {
-
+            myInterface.MyonClick(pos);
         }
 
         @Override

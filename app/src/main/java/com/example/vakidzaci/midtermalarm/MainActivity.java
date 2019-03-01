@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements MyInterface {
 
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements MyInterface {
 
     @Override
     public void MyonClick(int pos) {
-
+        myshowDialog2(pos);
     }
 
     @Override
@@ -109,7 +110,14 @@ public class MainActivity extends AppCompatActivity implements MyInterface {
 
     public void myshowDialog2(final int pos) {
         AlertDialog.Builder b = new AlertDialog.Builder(this);
-        b.setTitle("Time has left" + data.get(pos).getTime());
+        String hour = data.get(pos).getTime().split(":")[0];
+        int h = Integer.parseInt(hour);
+        Calendar rightNow = Calendar.getInstance();
+        int currentHourIn24Format = h - rightNow.get(Calendar.HOUR_OF_DAY);
+        if(currentHourIn24Format < 0){
+            currentHourIn24Format += 24;
+        }
+        b.setTitle( currentHourIn24Format + " hours has left");
         b.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
