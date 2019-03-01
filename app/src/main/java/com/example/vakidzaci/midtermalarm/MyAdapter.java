@@ -19,6 +19,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.TruckViewHolder>{
     private Context context;
     List<AlarmItem> items;
 
+    public void setMyInterface(MyInterface myInterface) {
+        this.myInterface = myInterface;
+    }
+
+    MyInterface myInterface;
+
     public MyAdapter(){}
 
     @NonNull
@@ -37,6 +43,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.TruckViewHolder>{
         holder.mTime.setText(alarmItem.getTime());
         holder.mMsg.setText(alarmItem.getMessage());
         holder.aSwitch.setChecked(alarmItem.isCheck());
+        holder.pos = position;
+
     }
 
 
@@ -45,16 +53,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.TruckViewHolder>{
         return items.size();
     }
 
-    public class TruckViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class TruckViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         public TextView mTime,mMsg;
         public Switch aSwitch;
+        public int pos;
 
         public TruckViewHolder(View itemView,View.OnClickListener myClickListener) {
             super(itemView);
-            itemView.setOnClickListener(this);
+
             init();
             itemView.setOnClickListener(myClickListener);
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         private void init(){
@@ -67,6 +78,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.TruckViewHolder>{
         @Override
         public void onClick(View v) {
 
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            myInterface.MyonLongClick(pos);
+            return false;
         }
     }
 

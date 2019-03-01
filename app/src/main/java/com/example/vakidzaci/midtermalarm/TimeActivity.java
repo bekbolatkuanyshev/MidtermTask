@@ -1,7 +1,9 @@
 package com.example.vakidzaci.midtermalarm;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +17,13 @@ public class TimeActivity extends AppCompatActivity implements View.OnClickListe
     EditText editText;
     TimePicker timePicker;
     Button btn;
+
+
+    public int result;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
